@@ -548,24 +548,24 @@ class VocabReport(object):
 		#print("GENERATING >>>>>>>> ")
 		# IMPORTANT: this is the code, which is responsible for write code fragments to the template
 
-		tpl = tpl.replace("%ns%",self.vocab._uri.encode("utf-8"))
-		tpl = tpl.replace("%specurl%",self.specurl.encode("utf-8"))
-		tpl = tpl.replace("%name%",self.name.encode("utf-8"))
+		tpl = tpl.replace("%ns%",self.vocab._uri)
+		tpl = tpl.replace("%specurl%",self.specurl)
+		tpl = tpl.replace("%name%",self.name)
 
-		tpl = tpl.replace("%date%",datestring.encode("utf-8"))
-		tpl = tpl.replace("%rdfadate%",rdfadatestring.encode("utf-8"))
-		tpl = tpl.replace("%version%",version.encode("utf-8"))
+		tpl = tpl.replace("%date%",datestring)
+		tpl = tpl.replace("%rdfadate%",rdfadatestring)
+		tpl = tpl.replace("%version%",version)
 
 
-		tpl = tpl.replace("%concepttypes%",self.concepttypes.encode("utf-8"))
-		tpl = tpl.replace("%concepttypes2%",self.concepttypes2.encode("utf-8"))
-		tpl = tpl.replace("%concepttypes3%",self.concepttypes3.encode("utf-8"))
+		tpl = tpl.replace("%concepttypes%",self.concepttypes)
+		tpl = tpl.replace("%concepttypes2%",self.concepttypes2)
+		tpl = tpl.replace("%concepttypes3%",self.concepttypes3)
 
-		tpl = tpl.replace("%azlist%",(azlist.encode("utf-8")))
-		tpl = tpl.replace("%termlist%",(termlist.encode("utf-8")))
+		tpl = tpl.replace("%azlist%",(azlist))
+		tpl = tpl.replace("%termlist%",(termlist))
 
 		if (htmlgroups != None):
-			tpl = tpl.replace("%groups%",(htmlgroups.encode("utf-8")))
+			tpl = tpl.replace("%groups%",(htmlgroups))
 		else:
 			tpl = tpl.replace("%groups%","")
 
