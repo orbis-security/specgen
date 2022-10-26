@@ -3,7 +3,7 @@
 # total rewrite. --danbri
 #
 # modifications and extensions: Bob Ferris, July 2010
-#		+ multiple property and class types 
+#		+ multiple property and class types
 #		+ multiple restrictions modeling
 #		+ rdfs:label, rdfs:comment
 #		+ classes and properties from other namespaces
@@ -56,7 +56,7 @@ import datetime
 
 # pre3: from rdflib.sparql.sparqlGraph  import SPARQLGraph
 #from rdflib.sparql.graphPattern import GraphPattern
-#from rdflib.sparql import Query 
+#from rdflib.sparql import Query
 
 CO = Namespace('http://purl.org/ontology/co/core#')
 FOAF = Namespace('http://xmlns.com/foaf/0.1/')
@@ -92,8 +92,8 @@ def termlink(text):
 # uri - a (primary) URI, eg. 'http://xmlns.com/foaf/0.1/workplaceHomepage'
 # id - a local-to-spec ID, eg. 'workplaceHomepage'
 # ns - an ns URI (isDefinedBy, eg. 'http://xmlns.com/foaf/0.1/')
-# 
-# label  - an rdfs:label 
+#
+# label  - an rdfs:label
 # comment - an rdfs:comment
 #
 # Beyond this, properties vary. Some have vs:status. Some have owl Deprecated.
@@ -160,7 +160,7 @@ class Term(object):
 			s = (str(self))
 		return(str(s))
 
-    # so we can treat this like a string 
+    # so we can treat this like a string
 	def __add__(self, s):
 		return (s + str(self))
 
@@ -234,7 +234,7 @@ class Class(Term):
 
 
 # a Python class representing an RDFS/OWL individual.
-# 
+#
 class Individual(Term):
 
 	# OK OK but how are we SUPPOSED to do this stuff in Python OO?. Stopgap.
@@ -267,7 +267,7 @@ class Vocab(object):
 		# should also load translations here?
 		# and deal with a base-dir?
 
-		##if f != None:    
+		##if f != None:
 		##  self.index()
 		self.ns_list = { "http://www.w3.org/1999/02/22-rdf-syntax-ns#"   : "rdf",
 					"http://www.w3.org/2000/01/rdf-schema#"         : "rdfs",
@@ -348,7 +348,7 @@ class Vocab(object):
 		tmpindividuals = []
 
 		g = self.graph
-		# extend query for different property types 
+		# extend query for different property types
 		query = 'SELECT ?x ?l ?c ?t WHERE { ?x rdfs:label ?l . ?x rdfs:comment ?c . ?x rdf:type ?t . ?x a ?type FILTER (?type = <http://www.w3.org/2002/07/owl#ObjectProperty> || ?type = <http://www.w3.org/2002/07/owl#DatatypeProperty> || ?type = <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> || ?type = <http://www.w3.org/2002/07/owl#FunctionalProperty> || ?type = <http://www.w3.org/2002/07/owl#InverseFunctionalProperty>) }'
 
 		relations = g.query(query)
@@ -408,7 +408,7 @@ class Vocab(object):
 			else:
 				speclog("Couldn't lookup term: " + x)
 
-#    self.terms.sort()   # does this even do anything? 
+#    self.terms.sort()   # does this even do anything?
 #    self.classes.sort()
 #    self.properties.sort()
 	# todo, use a dictionary index instead. RTFM.
@@ -526,16 +526,16 @@ class VocabReport(object):
 		f = open(filename, "r")
 		template = f.read()
 		return(template)
-	
+
 	def check_template_for_parameter(self,parameter):
 		return parameter in self.template
-			
+
 
 	def generate(self,htmlgroups):
 		tpl = self.template
 		azlist = self.az()
 		termlist = self.termlist()
-		
+
 		date = datetime.datetime.now()
 		datestring = date.strftime("%d %B %Y")
 		#2010-07-23T13:30:52+01:00
@@ -547,28 +547,28 @@ class VocabReport(object):
 		rdfdata = f.read()
 		#print("GENERATING >>>>>>>> ")
 		# IMPORTANT: this is the code, which is responsible for write code fragments to the template
-		
+
 		tpl = tpl.replace("%ns%",self.vocab._uri.encode("utf-8"))
 		tpl = tpl.replace("%specurl%",self.specurl.encode("utf-8"))
 		tpl = tpl.replace("%name%",self.name.encode("utf-8"))
-		
+
 		tpl = tpl.replace("%date%",datestring.encode("utf-8"))
 		tpl = tpl.replace("%rdfadate%",rdfadatestring.encode("utf-8"))
 		tpl = tpl.replace("%version%",version.encode("utf-8"))
-		
-		
+
+
 		tpl = tpl.replace("%concepttypes%",self.concepttypes.encode("utf-8"))
 		tpl = tpl.replace("%concepttypes2%",self.concepttypes2.encode("utf-8"))
 		tpl = tpl.replace("%concepttypes3%",self.concepttypes3.encode("utf-8"))
-		
+
 		tpl = tpl.replace("%azlist%",(azlist.encode("utf-8")))
 		tpl = tpl.replace("%termlist%",(termlist.encode("utf-8")))
-		
+
 		if (htmlgroups != None):
 			tpl = tpl.replace("%groups%",(htmlgroups.encode("utf-8")))
 		else:
 			tpl = tpl.replace("%groups%","")
-		
+
 		return(tpl)
 
 	def az(self):
@@ -626,7 +626,7 @@ class VocabReport(object):
 
 		# first classes, then properties
 		eg = """<div class="specterm" id="%s" about="%s" typeof="%s">
-			<h3>%s: %s</h3> 
+			<h3>%s: %s</h3>
 			<em property="rdfs:label" >%s</em> - <span property="rdfs:comment" >%s</span> <br /><table style="th { float: top; }">
 			<tr><th>Status:</th>
 			<td><span property="vs:status" >%s</span></td></tr>
@@ -640,7 +640,7 @@ class VocabReport(object):
 
 		# for individuals
 		ig = """<div class="specterm" id="%s" about="%s" typeof="%s">
-			<h3>%s: %s</h3> 
+			<h3>%s: %s</h3>
 			<em property="dc:title" >%s</em> - <span property="dc:description" >%s</span> <br /><table style="th { float: top; }">
 			<tr><th>Status:</th>
 			<td><span property="vs:status" >%s</span></td></tr>
@@ -718,7 +718,7 @@ class VocabReport(object):
 				subClassOf = "%s <td> %s </td></tr>" % (startStr, contentStr)
 			# else:
 			q1 = 'SELECT ?sc WHERE {<%s> rdfs:subClassOf ?sc } ' % (term.uri)
-			
+
 			relations = g.query(q1)
 			ordone = False
 			for (row) in relations:
@@ -763,8 +763,8 @@ class VocabReport(object):
 								orsubclass = orsc
 							if(orsubclass != orsc):
 								termStr1 = """<span about="%s" rel="rdfs:subClassOf" resource="[_:%s]"></span>\n""" % (term.uri, orsubclass)
-								termStr2 = """<span about="[_:%s]" typeof="owl:Restriction"></span>The property 
-									<span about="[_:%s]" rel="owl:onProperty" href="%s"><a href="#%s">%s</a></span> must be set <em>%s</em> 
+								termStr2 = """<span about="[_:%s]" typeof="owl:Restriction"></span>The property
+									<span about="[_:%s]" rel="owl:onProperty" href="%s"><a href="#%s">%s</a></span> must be set <em>%s</em>
 									<span about="[_:%s]" property="%s" datatype="xsd:nonNegativeInteger" >%s</span> time(s)""" % (orsubclass, orsubclass, oronproperty, prop.id, prop.type, orscope, orsubclass, orproperty, orpropertyvalue)
 
 								contentStr2 = "%s %s %s %s<br/>" % (contentStr2, termStr1, termStr2, contentStr3)
@@ -816,14 +816,14 @@ class VocabReport(object):
 								print("here I am with ", orp)
 
 							if (str(orproperty2) != ""):
-								termStr3 = """ and <em>%s</em> 
+								termStr3 = """ and <em>%s</em>
 										<span about="[_:%s]" property="%s" >%s</span> time(s)""" % (orscope2, orsubclass, orproperty2, orpropertyvalue2)
 								contentStr3 = "%s %s" % (contentStr3, termStr3)
 
 						# write also last/one restriction
 						termStr1 = """<span about ="%s" rel="rdfs:subClassOf" resource="[_:%s]"></span>\n""" % (term.uri, orsubclass)
-						termStr2 = """<span about="[_:%s]" typeof="owl:Restriction"></span>The property 
-									<span about="[_:%s]" rel="owl:onProperty" href="%s"><a href="#%s">%s</a></span> must be set <em>%s</em> 
+						termStr2 = """<span about="[_:%s]" typeof="owl:Restriction"></span>The property
+									<span about="[_:%s]" rel="owl:onProperty" href="%s"><a href="#%s">%s</a></span> must be set <em>%s</em>
 									<span about="[_:%s]" property="%s" datatype="xsd:nonNegativeInteger" >%s</span> time(s)""" % (orsubclass, orsubclass, oronproperty, prop.id, prop.type, orscope, orsubclass, orproperty, orpropertyvalue)
 
 						contentStr2 = "%s %s %s %s\n" % (contentStr2, termStr1, termStr2, contentStr3)
@@ -852,7 +852,7 @@ class VocabReport(object):
 
 			if contentStr != "":
 				hasSubClass = "%s <td> %s </td></tr>" % (startStr, contentStr)
-				
+
 			q = 'SELECT ?sc WHERE {?sc rdfs:subClassOf <%s> } ' % (term.uri)
 
 			relations = g.query(q)
@@ -1036,7 +1036,7 @@ class VocabReport(object):
 						q2 = 'SELECT ?d ?url ?urli ?urlipt WHERE {<%s> rdfs:domain ?d . ?d <http://www.w3.org/2002/07/owl#unionOf> ?url . ?url ?urlipt ?urli } ' % (term.uri)
 						print("try to fetch union domain with ", q2)
 						relations2 = g.query(q2)
-						
+
 						contentStr2 = ''
 						termStr2 = ''
 						listbnode = ''
@@ -1055,12 +1055,12 @@ class VocabReport(object):
 							if (str(listitempropertytype) == "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"):
 								urnextlistbnode = listitem
 								print("urnextlistbnode ", urnextlistbnode)
-						
+
 						termStr2 = """<span about="[_:%s]" typeof="rdf:Description"></span>
 									<span about="[_:%s]" rel="rdf:first" href="%s"><a href="%s">%s</a></span>
 									<span about="[_:%s]" rel="rdf:rest" resource="[_:%s]"></span>""" % (listbnode, listbnode, urfirstlistitem, urfirstlistitem, urfirstlistitemnice, listbnode, urnextlistbnode)
 						contentStr2 = "%s %s" % (contentStr2, termStr2)
-						
+
 						# 2nd: go down the list and collect all list items
 						if(urnextlistbnode != ""):
 							oldlistbnode = ''
@@ -1069,7 +1069,7 @@ class VocabReport(object):
 								q3 = 'SELECT ?urnlbn ?urlipt ?urli WHERE {?lbn <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <%s> . ?lbn <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> ?urnlbn . ?urnlbn ?urlipt ?urli } ' % (urfirstlistitem)
 								print("try to fetch more lists with " , q3)
 								relations3 = g.query(q3)
-									
+
 								oldlistbnode = urnextlistbnode
 								for (urnlbn, listitempropertytype, listitem) in relations3:
 									print("what to do next with urnlbn " , urnlbn , " :: listitempropertytype " , listitempropertytype , " :: listitem " , listitem , " :: urnextlistbnode " , urnextlistbnode)
@@ -1088,11 +1088,11 @@ class VocabReport(object):
 											else:
 												termStr3 = """<span about="[_:%s]" rel="rdf:rest" href="%s"></span>""" % (oldlistbnode, urnextlistbnode)
 											print("new urnextlistbnode ", urnextlistbnode)
-								
+
 								contentStr2 = "%s or %s %s" % (contentStr2, termStr2, termStr3)
-							
+
 							print("here I am")
-						
+
 						termStr = """<span rel="rdfs:domain" resource="[_:%s]"></span>
 									<span about="[_:%s]" typeof="owl:Class"></span>
 									<span about="[_:%s]" rel="owl:unionOf" resource="[_:%s]"></span>""" % (domainbnode, domainbnode, domainbnode, listbnode)
@@ -1137,7 +1137,7 @@ class VocabReport(object):
 						q2 = 'SELECT ?r ?url ?urli ?urlipt WHERE {<%s> rdfs:range ?r . ?r <http://www.w3.org/2002/07/owl#unionOf> ?url . ?url ?urlipt ?urli } ' % (term.uri)
 						print("try to fetch union range with ", q2)
 						relations2 = g.query(q2)
-						
+
 						contentStr2 = ''
 						termStr2 = ''
 						listbnode = ''
@@ -1156,12 +1156,12 @@ class VocabReport(object):
 							if (str(listitempropertytype) == "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"):
 								urnextlistbnode = listitem
 								print("urnextlistbnode ", urnextlistbnode)
-						
+
 						termStr2 = """<span about="[_:%s]" typeof="rdf:Description"></span>
 									<span about="[_:%s]" rel="rdf:first" href="%s"><a href="%s">%s</a></span>
 									<span about="[_:%s]" rel="rdf:rest" resource="[_:%s]"></span>""" % (listbnode, listbnode, urfirstlistitem, urfirstlistitem, urfirstlistitemnice, listbnode, urnextlistbnode)
 						contentStr2 = "%s %s" % (contentStr2, termStr2)
-						
+
 						# 2nd: go down the list and collect all list items
 						if(urnextlistbnode != ""):
 							oldlistbnode = ''
@@ -1170,7 +1170,7 @@ class VocabReport(object):
 								q3 = 'SELECT ?urnlbn ?urlipt ?urli WHERE {?lbn <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <%s> . ?lbn <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> ?urnlbn . ?urnlbn ?urlipt ?urli } ' % (urfirstlistitem)
 								print("try to fetch more lists with " , q3)
 								relations3 = g.query(q3)
-									
+
 								oldlistbnode = urnextlistbnode
 								for (urnlbn, listitempropertytype, listitem) in relations3:
 									print("what to do next with urnlbn " , urnlbn , " :: listitempropertytype " , listitempropertytype , " :: listitem " , listitem , " :: urnextlistbnode " , urnextlistbnode)
@@ -1189,11 +1189,11 @@ class VocabReport(object):
 											else:
 												termStr3 = """<span about="[_:%s]" rel="rdf:rest" href="%s"></span>""" % (oldlistbnode, urnextlistbnode)
 											print("new urnextlistbnode ", urnextlistbnode)
-								
+
 								contentStr2 = "%s or %s %s" % (contentStr2, termStr2, termStr3)
-							
+
 							print("here I am")
-						
+
 						termStr = """<span rel="rdfs:range" resource="[_:%s]"></span>
 									<span about="[_:%s]" typeof="owl:Class"></span>
 									<span about="[_:%s]" rel="owl:unionOf" resource="[_:%s]"></span>""" % (rangebnode, rangebnode, rangebnode, listbnode)
@@ -1221,9 +1221,9 @@ class VocabReport(object):
 
 			if contentStr != "":
 				subPropertyOf = "%s <td> %s </td></tr>" % (startStr, contentStr)
-				
+
 			q1 = 'SELECT ?sp WHERE {<%s> rdfs:subPropertyOf ?sp } ' % (term.uri)
-				
+
 			relations = g.query(q1)
 			for (row) in relations:
 				subproperty = row[0]
@@ -1235,7 +1235,7 @@ class VocabReport(object):
 						termStr = """<span rel="rdfs:subPropertyOf" href="%s"><a href="%s">%s</a></span>\n""" % (subproperty, subproperty, subpropertynice)
 						contentStr = "%s %s" % (contentStr, termStr)
 						print("must be super property from another ns")
-				
+
 				if contentStr != "":
 					subPropertyOf = "%s <td> %s </td></tr>" % (startStr, contentStr)
 
@@ -1485,22 +1485,22 @@ class VocabReport(object):
 			for term in self.vocab.individuals:
 				# individual has type
 				hasType = ''
-				
+
 				q = 'SELECT ?t ?l WHERE {<%s> rdf:type ?t. ?t rdfs:label ?l } ' % (term.uri)
 				relations = g.query(q)
 				startStr = '<tr><th>Type:</th>\n'
-				
+
 				contentStr = ''
 				for (type, label) in relations:
 					t = Term(type)
 					termStr = """<a href="#%s">%s</a>\n""" % (type.id, label)
 					contentStr = "%s %s" % (contentStr, termStr)
-					
+
 				if contentStr != "":
 					hasType = "%s <td> %s </td></tr>" % (startStr, contentStr)
-				
+
 				q = 'SELECT ?t WHERE {<%s> rdf:type ?t } ' % (term.uri)
-				
+
 				relations = g.query(q)
 				for (type) in relations:
 					typenice = self.vocab.niceName(type)
@@ -1512,7 +1512,7 @@ class VocabReport(object):
 						if colon > 0:
 							termStr = """<a href="%s">%s</a>\n""" % (type, typenice)
 							contentStr = "%s %s" % (contentStr, termStr)
-					
+
 					if contentStr != "":
 						hasType = "%s <td> %s </td></tr>" % (startStr, contentStr)
 
@@ -1561,7 +1561,7 @@ class VocabReport(object):
 					archaicTxt = archaicTxt + zz
 				if((term.status == None) or (term.status == "") or (term.status == "unknown")):
 					archaicTxt = archaicTxt + zz
-					
+
 			## then add the whole thing to the main tl string
 			tl = "%s %s" % (tl, stableTxt + "\n" + testingTxt + "\n" + unstableTxt + "\n" + archaicTxt)
 
