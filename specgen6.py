@@ -29,10 +29,10 @@
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in
 # all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -61,7 +61,7 @@ def makeSpec(indir, uri, shortName,outdir,outfile, template, templatedir, indexr
   spec.index() # slurp info from sources
 
   #create a Report
-  out = VocabReport( spec, indir, template, templatedir,specurl,name) 
+  out = VocabReport( spec, indir, template, templatedir,specurl,name)
   #check template
   htmlgroups = None
   if (addGroups):
@@ -91,7 +91,7 @@ def usage():
   print(sys.argv[0], " --indir=examples/foaf/ --ns=http://xmlns.com/foaf/0.1/ --prefix=foaf --ontofile=index.rdf")
   print("or ")
   print(sys.argv[0], " --indir=../../xmlns.com/htdocs/foaf/ --ns=http://xmlns.com/foaf/0.1/ --prefix=foaf --ontofile=index.rdf --templatedir=../../xmlns.com/htdocs/foaf/spec/ --indexrdfdir=../../xmlns.com/htdocs/foaf/spec/ --outdir=../../xmlns.com/htdocs/foaf/spec/")
- 
+
 
 def main():
   ##looking for outdir, outfile, indir, namespace, shortns
@@ -109,7 +109,7 @@ def main():
   indir = None #indir
   uri = None #ns
   shortName = None #prefix
-  outdir = None 
+  outdir = None
   outfile = None
   templatedir = None
   indexrdfdir = None
@@ -121,8 +121,8 @@ def main():
   if len(opts) ==0:
       print("No arguments found")
       usage()
-      sys.exit(2)   
-  
+      sys.exit(2)
+
 
   for o, a in opts:
       if o == "--indir":
@@ -154,20 +154,20 @@ def main():
   if indir == None or len(indir) ==0:
       print("No in directory given")
       usage()
-      sys.exit(2)   
+      sys.exit(2)
 
   # check we have been given a namespace url
   if (uri == None or len(uri)==0):
       print("No namespace uri given")
       usage()
-      sys.exit(2)   
+      sys.exit(2)
 
   # check we have a prefix
   if (shortName == None or len(shortName)==0):
       print("No prefix given")
       usage()
       sys.exit(2)
-      
+
   # check we have benn given an ontology file
   if (ontofile == None or len(ontofile)==0):
       print("No ontology file given")
@@ -180,7 +180,7 @@ def main():
   if (outdir == None or len(outdir)==0):
       outdir = indir
       print("No outdir, using indir ",indir)
-  
+
   if (outfile == None or len(outfile)==0):
       outfile = "_tmp_spec.html"
       print("No outfile, using ",outfile)
@@ -200,7 +200,7 @@ def main():
   else:
       print(indir,"is not a directory")
       usage()
-      sys.exit(2)   
+      sys.exit(2)
 
 
   # check templatedir is a dir and it is readable and writeable
@@ -209,7 +209,7 @@ def main():
   else:
       print(templatedir,"is not a directory")
       usage()
-      sys.exit(2)   
+      sys.exit(2)
 
 
   # check indexrdfdir is a dir and it is readable and writeable
@@ -218,7 +218,7 @@ def main():
   else:
       print(indexrdfdir,"is not a directory")
       usage()
-      sys.exit(2)   
+      sys.exit(2)
 
   # check outdir is a dir and it is readable and writeable
   if (os.path.isdir(outdir)):
@@ -226,16 +226,16 @@ def main():
   else:
       print(outdir,"is not a directory")
       usage()
-      sys.exit(2)   
+      sys.exit(2)
 
-  #check we can read infile    
+  #check we can read infile
   try:
     filename = os.path.join(indexrdfdir, ontofile)
     f = open(filename, "r")
   except:
     print("Can't open ",ontofile,"  in ",indexrdfdir)
     usage()
-    sys.exit(2)   
+    sys.exit(2)
 
   #look for the template file
   try:
@@ -244,7 +244,7 @@ def main():
   except:
     print("No template.html in ",templatedir)
     usage()
-    sys.exit(2)   
+    sys.exit(2)
 
   # check we can write to outfile
   try:
@@ -254,21 +254,21 @@ def main():
     print("Cannot write to ",outfile," in",outdir)
     usage()
     sys.exit(2)
-    
-    
+
+
    # print group status
   if (groups):
     print("Adding Groups: Yes")
-  else: 
+  else:
     print("Adding Groups: No" )
-    
+
   # check if url of specification is given
   if (specurl == None or len(specurl)==0):
       print("No URL for the specification given")
       specurl = "http://example.org/spec.html";
-   
+
   print("Use specification URL ",specurl)
-    
+
   # check if url of specification is given
   if (name == None or len(name)==0):
       print("No Name for the specification given")
@@ -277,7 +277,7 @@ def main():
 
 
   makeSpec(indir,uri,shortName,outdir,outfile,"template.html",templatedir,indexrdfdir, ontofile,specurl,name,groups)
-  
+
 
 if __name__ == "__main__":
     main()
