@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # This is a draft rewrite of specgen5, the family of scripts (originally
 # in Ruby, then Python) that are used with the Counter Ontology, Ordered Lists
@@ -69,11 +69,11 @@ def makeSpec(indir, uri, shortName,outdir,outfile, template, templatedir, indexr
           groups = Grouping(spec,uri)
           htmlgroups = groups.getHTMLGroups();
       else:
-          print "Template doesn't contain %groups% parameter -- skipping groups creation"
+          print("Template doesn't contain %groups% parameter -- skipping groups creation")
 
 
   filename = os.path.join(outdir, outfile)
-  print "Printing to ",filename
+  print("Printing to ",filename)
 
   f = open(filename,"w")
   result = out.generate(htmlgroups)
@@ -85,12 +85,12 @@ def makeFoaf():
 
 
 def usage():
-  print "Usage:",sys.argv[0],"--indir=dir --ns=uri --prefix=prefix [--outdir=outdir] [--outfile=outfile] [--templatedir=templatedir] [--indexrdf=indexrdf] [--ontofile=ontofile]"
-  print "[--specurl=urlofspecification] [--name='name of Ontology'] [--groups]"
-  print "e.g. "
-  print sys.argv[0], " --indir=examples/foaf/ --ns=http://xmlns.com/foaf/0.1/ --prefix=foaf --ontofile=index.rdf"
-  print "or "
-  print sys.argv[0], " --indir=../../xmlns.com/htdocs/foaf/ --ns=http://xmlns.com/foaf/0.1/ --prefix=foaf --ontofile=index.rdf --templatedir=../../xmlns.com/htdocs/foaf/spec/ --indexrdfdir=../../xmlns.com/htdocs/foaf/spec/ --outdir=../../xmlns.com/htdocs/foaf/spec/"
+  print("Usage:",sys.argv[0],"--indir=dir --ns=uri --prefix=prefix [--outdir=outdir] [--outfile=outfile] [--templatedir=templatedir] [--indexrdf=indexrdf] [--ontofile=ontofile]")
+  print("[--specurl=urlofspecification] [--name='name of Ontology'] [--groups]")
+  print("e.g. ")
+  print(sys.argv[0], " --indir=examples/foaf/ --ns=http://xmlns.com/foaf/0.1/ --prefix=foaf --ontofile=index.rdf")
+  print("or ")
+  print(sys.argv[0], " --indir=../../xmlns.com/htdocs/foaf/ --ns=http://xmlns.com/foaf/0.1/ --prefix=foaf --ontofile=index.rdf --templatedir=../../xmlns.com/htdocs/foaf/spec/ --indexrdfdir=../../xmlns.com/htdocs/foaf/spec/ --outdir=../../xmlns.com/htdocs/foaf/spec/")
  
 
 def main():
@@ -99,10 +99,10 @@ def main():
   try:
         opts, args = getopt.getopt(sys.argv[1:], None, ["outdir=", "outfile=", "indir=", "ns=", "prefix=", "templatedir=", "indexrdfdir=", "ontofile=","groups","specurl=","name="])
         #print opts
-  except getopt.GetoptError, err:
+  except getopt.GetoptError as err:
         # print help information and exit:
-        print str(err) # will print something like "option -a not recognized"
-        print "something went wrong"
+        print(str(err)) # will print something like "option -a not recognized"
+        print("something went wrong")
         usage()
         sys.exit(2)
 
@@ -119,7 +119,7 @@ def main():
   name = None
 
   if len(opts) ==0:
-      print "No arguments found"
+      print("No arguments found")
       usage()
       sys.exit(2)   
   
@@ -152,79 +152,79 @@ def main():
 
   # check we have been given a indir
   if indir == None or len(indir) ==0:
-      print "No in directory given"
+      print("No in directory given")
       usage()
       sys.exit(2)   
 
   # check we have been given a namespace url
   if (uri == None or len(uri)==0):
-      print "No namespace uri given"
+      print("No namespace uri given")
       usage()
       sys.exit(2)   
 
   # check we have a prefix
   if (shortName == None or len(shortName)==0):
-      print "No prefix given"
+      print("No prefix given")
       usage()
       sys.exit(2)
       
   # check we have benn given an ontology file
   if (ontofile == None or len(ontofile)==0):
-      print "No ontology file given"
+      print("No ontology file given")
       usage()
       sys.exit(2)
   else:
-  	print "Use ontology file ",ontofile    
+  	print("Use ontology file ",ontofile    )
 
   # check outdir
   if (outdir == None or len(outdir)==0):
       outdir = indir
-      print "No outdir, using indir ",indir
+      print("No outdir, using indir ",indir)
   
   if (outfile == None or len(outfile)==0):
       outfile = "_tmp_spec.html"
-      print "No outfile, using ",outfile
+      print("No outfile, using ",outfile)
 
   if (templatedir == None or len(templatedir)==0):
       templatedir = indir
-      print "No templatedir, using ",templatedir
+      print("No templatedir, using ",templatedir)
 
   if (indexrdfdir == None or len(indexrdfdir)==0):
       indexrdfdir = indir
-      print "No indexrdfdir, using ",indexrdfdir
+      print("No indexrdfdir, using ",indexrdfdir)
 
 # now do some more checking
   # check indir is a dir and it is readable and writeable
   if (os.path.isdir(indir)):
-      print "In directory is ok ",indir
+      print("In directory is ok ",indir)
   else:
-      print indir,"is not a directory"
+      print(indir,"is not a directory")
       usage()
       sys.exit(2)   
 
 
   # check templatedir is a dir and it is readable and writeable
   if (os.path.isdir(templatedir)):
-      print "Template directory is ok ",templatedir
+      print("Template directory is ok ",templatedir)
   else:
-      print templatedir,"is not a directory"
+      print(templatedir,"is not a directory")
       usage()
       sys.exit(2)   
 
 
   # check indexrdfdir is a dir and it is readable and writeable
   if (os.path.isdir(indexrdfdir)):
-      print "indexrdfdir directory is ok ",indexrdfdir
+      print("indexrdfdir directory is ok ",indexrdfdir)
   else:
-      print indexrdfdir,"is not a directory"
+      print(indexrdfdir,"is not a directory")
       usage()
       sys.exit(2)   
 
   # check outdir is a dir and it is readable and writeable
   if (os.path.isdir(outdir)):
-      print "Out directory is ok ",outdir
+      print("Out directory is ok ",outdir)
   else:
-      print outdir,"is not a directory"
+      print(outdir,"is not a directory")
       usage()
       sys.exit(2)   
 
@@ -233,7 +233,7 @@ def main():
     filename = os.path.join(indexrdfdir, ontofile)
     f = open(filename, "r")
   except:
-    print "Can't open ",ontofile,"  in ",indexrdfdir
+    print("Can't open ",ontofile,"  in ",indexrdfdir)
     usage()
     sys.exit(2)   
 
@@ -242,7 +242,7 @@ def main():
     filename = os.path.join(templatedir, "template.html")
     f = open(filename, "r")
   except:
-    print "No template.html in ",templatedir
+    print("No template.html in ",templatedir)
     usage()
     sys.exit(2)   
 
@@ -251,29 +251,29 @@ def main():
     filename = os.path.join(outdir, outfile)
     f = open(filename, "w")
   except:
-    print "Cannot write to ",outfile," in",outdir
+    print("Cannot write to ",outfile," in",outdir)
     usage()
     sys.exit(2)
     
     
    # print group status
   if (groups):
-    print "Adding Groups: Yes"
+    print("Adding Groups: Yes")
   else: 
-    print "Adding Groups: No" 
+    print("Adding Groups: No" )
     
   # check if url of specification is given
   if (specurl == None or len(specurl)==0):
-      print "No URL for the specification given"
+      print("No URL for the specification given")
       specurl = "http://example.org/spec.html";
    
-  print "Use specification URL ",specurl
+  print("Use specification URL ",specurl)
     
   # check if url of specification is given
   if (name == None or len(name)==0):
-      print "No Name for the specification given"
+      print("No Name for the specification given")
       name = "NAME";
-  print "Using name: ",name 
+  print("Using name: ",name)
 
 
   makeSpec(indir,uri,shortName,outdir,outfile,"template.html",templatedir,indexrdfdir, ontofile,specurl,name,groups)
