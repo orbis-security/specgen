@@ -262,6 +262,7 @@ class Vocab(object):
 		self.filename = os.path.join(dir, f)
 		# print("ontology file name ", self.filename )
 		self.graph.parse(self.filename)
+		print("Loaded {} triples".format(len(self.graph)))
 		self.terms = []
 		self.uterms = []
 		# should also load translations here?
@@ -389,6 +390,12 @@ class Vocab(object):
 			if (not str(i) in tmpindividuals):
 				tmpindividuals.append(str(i))
 				self.individuals.append(i)
+
+		print("Total terms: {} (classes: {}, properties: {}, individuals: {})"
+			.format(len(self.terms),
+				len(self.classes),
+				len(self.properties),
+				len(self.individuals)))
 
 		self.terms.sort(key = operator.attrgetter('id'))
 		self.classes.sort(key = operator.attrgetter('id'))
